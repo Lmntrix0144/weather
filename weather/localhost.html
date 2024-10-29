@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Улаанбаатарын Цаг агаар</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .weather-container {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <h1>Улаанбаатарын цаг агаар</h1>
+        <p id="weather">Ачааллаж байна...</p>
+    </div>
+
+    <script>
+        const apiKey = '04465c31f0cebdaea51bfe50cd66c2ca'; 
+        const city = 'Ulaanbaatar';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=mn`;
+
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        async function fetchWeather() {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const temperature = data.main.temp;
+                const description = data.weather[0].description;
+                document.getElementById('weather').textContent = `Температур: ${temperature}°C, Байдал: ${description}`;
+            } catch (error) {
+                document.getElementById('weather').textContent = 'Мэдээлэл авахад алдаа гарлаа.';
+            }
+        }
+
+        fetchWeather();
+    </script>
+</body>
+</html>
